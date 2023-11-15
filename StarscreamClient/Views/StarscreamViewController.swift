@@ -8,7 +8,6 @@
 
 import UIKit
 import Starscream
-import SocketRocket
 
 /// For sending message to the sever.(Experimental)
 protocol WebSocketConvey {
@@ -18,7 +17,7 @@ protocol WebSocketConvey {
 class StarscreamViewController: UIViewController {
     var starscream: WebSocketClient = StarscreamClient()
 
-    var SR_Socket: SRWebSocket?
+//    var SR_Socket: SRWebSocket?
     
     var wsConveyDelegate: WebSocketConvey?
     
@@ -36,24 +35,6 @@ class StarscreamViewController: UIViewController {
     
     @IBAction func disconnectButtonAction(_ sender: Any) {      
         starscream.closeWebSocketConnection()
-    }
-    
-    @IBAction func sendMessageAction(_ sender: Any) {
-        wsConveyDelegate?.sendMessage(message: "Hell 0!")
-    }
-    
-    @IBAction func connectSRAction(_ sender: Any) {
-        if let url = URL(string: TestSockets.localHost.rawValue) {
-            var request = URLRequest(url: url)
-            request.timeoutInterval = 5
-            SR_Socket = SRWebSocket(urlRequest: request)
-            SR_Socket?.delegate = self
-            SR_Socket?.open()
-        }
-    }
-    
-    @IBAction func disconnectSRAction(_ sender: Any) {
-        SR_Socket?.close()
     }
     
     @IBAction func reconnectAction(_ sender: Any) {
@@ -100,7 +81,7 @@ extension StarscreamViewController: WebSocketStateDelegate {
 }
 
 // MARK: - SocketRocket delagate methods
-extension StarscreamViewController: SRWebSocketDelegate {
+/*extension StarscreamViewController: SRWebSocketDelegate {
     func webSocketDidOpen(_ webSocket: SRWebSocket) {
         if webSocket.readyState == .OPEN {
             print("Socket is connected")
@@ -125,8 +106,7 @@ extension StarscreamViewController: SRWebSocketDelegate {
             print("------------------------------------Closed------------------------------------")
         }
     }
-}
-
+}*/
 // MARK: - Websocket event delegate
 extension StarscreamViewController: WebSocketEventDelegate {
     func webSocketDidViabilityChange(isViable: Bool) {
