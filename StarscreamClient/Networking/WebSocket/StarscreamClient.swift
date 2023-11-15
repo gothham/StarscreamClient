@@ -10,6 +10,9 @@ import Starscream
 
 /// Client side websocket handler.
 open class StarscreamClient: WebSocketClient {
+    // MARK: - Properties
+    
+    /// DispatchQueue for thread-safe state updates.
     private let stateUpdateQueue = DispatchQueue(label: "com.chainsaw.ScreamingRocket.websocketStateUpdateQueue")
     
     private var _readyState: ReadyState = .connecting
@@ -31,15 +34,18 @@ open class StarscreamClient: WebSocketClient {
     }
 
     var isConnected: Bool = false
-    
     public var socket: WebSocket!
-    
     var fusionSocketDelegate: FusionSocketDelegate?
     var eventDelegate: WebSocketEventDelegate?
     var webSocketStateHandler: WebSocketStateDelegate? //Delegate to track readyState changes(Optional)
     
+    // MARK: - Initialization
+    
+    /// Default initializer.
+    public init() {}
     
     // MARK: - WebSocketClient Delegate methods
+    
     /// Open websocket connection.
     public func openWebSocketConnection() {
         guard readyState != .open /*|| StarscreamClient.readyState == .connecting*/ else {
@@ -60,8 +66,8 @@ open class StarscreamClient: WebSocketClient {
         socket.connect()
 
         // Set the readyState to connecting
-        //StarscreamClient.readyState = .connecting
-        //webSocketStateHandler?.readyStateDidChanged(to: .connecting)
+        /*StarscreamClient.readyState = .connecting
+        webSocketStateHandler?.readyStateDidChanged(to: .connecting)*/
     }
     
     /// Close websocket connection.
@@ -84,6 +90,7 @@ open class StarscreamClient: WebSocketClient {
     
     /// Closes the current connection and establish a new connection.
     public func reconnectWebSocketConneciton() {
+        print("Triggered \(#function)")
         // Close the connection
         closeWebSocketConnection()
         
@@ -96,7 +103,7 @@ open class StarscreamClient: WebSocketClient {
         openWebSocketConnection()
     }
     
-    /// Simple method to send string(Experimental).
+    /// Send string over WebSocket.
     func sendString(string: String) {
         socket.write(string: string) {
             print("Successfully send the string to the server.")
@@ -176,6 +183,7 @@ extension StarscreamClient: WebSocketDelegate {
         }
     }
 }
+// MARK: - WebSocketConvey protocol conformance
 
 extension StarscreamClient: WebSocketConvey {
     func sendMessage(message: String) {
@@ -185,9 +193,8 @@ extension StarscreamClient: WebSocketConvey {
     }
 }
 
-// TODO: - Remove after testing ;)
+// MARK: - TestSockets enumeration
+
 enum TestSockets: String {
     case localHost = "ws://localhost:8080"
-    case sandyWebSocket = "wss://ws.postman-echo.com/raw"
-    case onlineWebsocketHost = ""
 }
