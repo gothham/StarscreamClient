@@ -12,16 +12,16 @@ import Starscream
 open class StarscreamClient: WebSocketClient {
     private let stateUpdateQueue = DispatchQueue(label: "com.chainsaw.ScreamingRocket.websocketStateUpdateQueue")
     
-    private var _readyState: ReadyState = .closed
+    private var _readyState: ReadyState = .connecting
     
     /// Current WebSocket connection state. (Thread safe)
     var readyState: ReadyState {
         get {
-            var state: ReadyState?
+            var state: ReadyState!
             stateUpdateQueue.sync {
                 state = _readyState
             }
-            return state ?? .closed
+            return state
         }
         set {
             stateUpdateQueue.async(flags: .barrier) {
@@ -66,8 +66,13 @@ open class StarscreamClient: WebSocketClient {
     
     /// Close websocket connection.
     public func closeWebSocketConnection() {
-        guard readyState != .closed else {
-            print("Connection not yet established.")
+        guard socket != nil else {
+            print("Socket connection not yet established")
+            return
+        }
+        
+        guard readyState != .closed && readyState != .connecting else {
+            print("Connection is in closed state or not yet established.")
             return
         }
         
@@ -79,9 +84,13 @@ open class StarscreamClient: WebSocketClient {
     
     /// Closes the current connection and establish a new connection.
     public func reconnectWebSocketConneciton() {
-        print("Triggered \(#function)")
         // Close the connection
         closeWebSocketConnection()
+        
+        /*guard socket != nil else {
+            print("Socket connection not yet established")
+            return
+        }*/
         
         // Initailizing the handshake again
         openWebSocketConnection()
@@ -158,7 +167,6 @@ extension StarscreamClient: WebSocketDelegate {
             if let error = error {
                 fusionSocketDelegate?.webSocket(socket, didFailWithError: error)
             }
-            
         case .peerClosed: // peer closed the connection.
             readyState = .closed
             webSocketStateHandler?.readyStateDidChanged(to: .closed)

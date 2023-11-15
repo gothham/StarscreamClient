@@ -10,13 +10,13 @@ import Foundation
 
 /// Type used for checking the ReadyState/ConnectionState/SocketState.
 enum ReadyState: Int {
-    /// Initial state when a WebSocket connection is created, and it's not yet open.
+    /// Initial state of WebSocket connection lifecycle.
     case connecting = 0
     
     /// The connection is fully open, and you can send and receive data.
     case open = 1
     
-    /// When either the client or the server initiates the process of closing the WebSocket connection, it enters the "CLOSING" state.
+    /// WebSocket connection is going to be closed.
     case closing = 2
     
     /// Connection is no longer open, and you can't send or receive data through it.
