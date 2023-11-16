@@ -14,8 +14,10 @@ open class StarscreamClient: WebSocketClient {
     
     /// DispatchQueue for thread-safe state updates.
     private let stateUpdateQueue = DispatchQueue(label: "com.chainsaw.ScreamingRocket.websocketStateUpdateQueue")
+    private let socketOperationQueue = DispatchQueue(label: "com.chainsaw.ScreamingRocket.SocketOperationQueue")
     
     private var _readyState: ReadyState = .connecting
+    private var isReconnecting = false
     
     /// Current WebSocket connection state. (Thread safe)
     var readyState: ReadyState {
@@ -47,14 +49,9 @@ open class StarscreamClient: WebSocketClient {
     // MARK: - WebSocketClient Delegate methods
     
     /// Open websocket connection.
-    public func openWebSocketConnection() {
+    public func openWebSocketConnection(with url: URL) {
         guard readyState != .open /*|| StarscreamClient.readyState == .connecting*/ else {
             print("Connection is already open")
-            return
-        }
-        
-        guard let url = URL(string: TestSockets.localHost.rawValue) else {
-            print("Failed to unwrap url")
             return
         }
         
@@ -90,34 +87,44 @@ open class StarscreamClient: WebSocketClient {
     
     /// Closes the current connection and establish a new connection.
     public func reconnectWebSocketConneciton() {
-        print("Triggered \(#function)")
-        // Close the connection
-        closeWebSocketConnection()
-        
-        /*guard socket != nil else {
-            print("Socket connection not yet established")
+        guard let url = URL(string: TestSockets.localHost.rawValue) else {
+            print("Failed to construct URL from URL string!")
             return
-        }*/
+        }
         
-        // Initailizing the handshake again
-        openWebSocketConnection()
-    }
-    
-    /// Send string over WebSocket.
-    func sendString(string: String) {
-        socket.write(string: string) {
-            print("Successfully send the string to the server.")
+        socketOperationQueue.async {
+            self.closeWebSocketConnection()
+            
+            // Poll readyState to check when the socket is closed
+            while self.readyState != .closed {
+                usleep(100000) // Sleep for 100ms (adjust as needed)
+            }
+            
+            self.openWebSocketConnection(with: url)
         }
     }
+    
+    public func sendString(message: String) {
+        socket.write(string: message) {
+            print("Message send to server successfully.")
+        }
+    }
+    // MARK: - Private methods
     
     private func handleError(_ error: Error?) {
         guard let error = error else { return }
         
-        print("Type of error produced by starscream: \(error)")
+        // Handle the error according to the context.
     }
     
     // MARK: - Private methods
+    
     private func disconnectWebSocket() {
+        guard socket != nil else {
+            print("Socket connection not yet established")
+            return
+        }
+        
         socket.disconnect()
         socket.delegate = nil
         webSocketStateHandler?.readyStateDidChanged(to: .closed)

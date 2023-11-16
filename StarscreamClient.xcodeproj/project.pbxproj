@@ -7,12 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		55C3786A2B04B236005A3E54 /* WebSocketStateDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55C378632B04B236005A3E54 /* WebSocketStateDelegate.swift */; };
-		55C3786B2B04B236005A3E54 /* WebSocketEventDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55C378642B04B236005A3E54 /* WebSocketEventDelegate.swift */; };
 		55C3786C2B04B236005A3E54 /* StarscreamViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55C378652B04B236005A3E54 /* StarscreamViewController.swift */; };
 		55C3786D2B04B236005A3E54 /* StarscreamClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55C378662B04B236005A3E54 /* StarscreamClient.swift */; };
-		55C3786E2B04B236005A3E54 /* ReadyState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55C378672B04B236005A3E54 /* ReadyState.swift */; };
-		55C3786F2B04B236005A3E54 /* FusionSocketDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55C378682B04B236005A3E54 /* FusionSocketDelegate.swift */; };
 		55C378702B04B236005A3E54 /* WebSocketClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55C378692B04B236005A3E54 /* WebSocketClient.swift */; };
 		55C4197C2B04AC7800F79C5F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55C4197B2B04AC7800F79C5F /* AppDelegate.swift */; };
 		55C4197E2B04AC7800F79C5F /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55C4197D2B04AC7800F79C5F /* SceneDelegate.swift */; };
@@ -23,12 +19,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		55C378632B04B236005A3E54 /* WebSocketStateDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebSocketStateDelegate.swift; sourceTree = "<group>"; };
-		55C378642B04B236005A3E54 /* WebSocketEventDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebSocketEventDelegate.swift; sourceTree = "<group>"; };
 		55C378652B04B236005A3E54 /* StarscreamViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StarscreamViewController.swift; sourceTree = "<group>"; };
 		55C378662B04B236005A3E54 /* StarscreamClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StarscreamClient.swift; sourceTree = "<group>"; };
-		55C378672B04B236005A3E54 /* ReadyState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReadyState.swift; sourceTree = "<group>"; };
-		55C378682B04B236005A3E54 /* FusionSocketDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FusionSocketDelegate.swift; sourceTree = "<group>"; };
 		55C378692B04B236005A3E54 /* WebSocketClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebSocketClient.swift; sourceTree = "<group>"; };
 		55C419782B04AC7800F79C5F /* StarscreamClient.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StarscreamClient.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		55C4197B2B04AC7800F79C5F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -67,7 +59,6 @@
 			isa = PBXGroup;
 			children = (
 				55C378722B04B24B005A3E54 /* WebSocket */,
-				55C378712B04B23B005A3E54 /* Delegators */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -80,22 +71,11 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
-		55C378712B04B23B005A3E54 /* Delegators */ = {
-			isa = PBXGroup;
-			children = (
-				55C378682B04B236005A3E54 /* FusionSocketDelegate.swift */,
-				55C378642B04B236005A3E54 /* WebSocketEventDelegate.swift */,
-				55C378632B04B236005A3E54 /* WebSocketStateDelegate.swift */,
-			);
-			path = Delegators;
-			sourceTree = "<group>";
-		};
 		55C378722B04B24B005A3E54 /* WebSocket */ = {
 			isa = PBXGroup;
 			children = (
 				55C378692B04B236005A3E54 /* WebSocketClient.swift */,
 				55C378662B04B236005A3E54 /* StarscreamClient.swift */,
-				55C378672B04B236005A3E54 /* ReadyState.swift */,
 			);
 			path = WebSocket;
 			sourceTree = "<group>";
@@ -257,13 +237,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				55C378702B04B236005A3E54 /* WebSocketClient.swift in Sources */,
-				55C3786E2B04B236005A3E54 /* ReadyState.swift in Sources */,
 				55C3786C2B04B236005A3E54 /* StarscreamViewController.swift in Sources */,
 				55C4197C2B04AC7800F79C5F /* AppDelegate.swift in Sources */,
 				55C3786D2B04B236005A3E54 /* StarscreamClient.swift in Sources */,
-				55C3786B2B04B236005A3E54 /* WebSocketEventDelegate.swift in Sources */,
-				55C3786A2B04B236005A3E54 /* WebSocketStateDelegate.swift in Sources */,
-				55C3786F2B04B236005A3E54 /* FusionSocketDelegate.swift in Sources */,
 				55C4197E2B04AC7800F79C5F /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

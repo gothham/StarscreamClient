@@ -29,8 +29,9 @@ class StarscreamViewController: UIViewController {
     }
 
     @IBAction func connectButtonAction(_ sender: Any) {
-        starscream.openWebSocketConnection()
-        
+        if let url = URL(string: TestSockets.localHost.rawValue) {
+            starscream.openWebSocketConnection(with: url)
+        }
     }
     
     @IBAction func disconnectButtonAction(_ sender: Any) {      
@@ -81,6 +82,7 @@ extension StarscreamViewController: WebSocketStateDelegate {
 }
 
 // MARK: - SocketRocket delagate methods
+
 /*extension StarscreamViewController: SRWebSocketDelegate {
     func webSocketDidOpen(_ webSocket: SRWebSocket) {
         if webSocket.readyState == .OPEN {
@@ -108,6 +110,7 @@ extension StarscreamViewController: WebSocketStateDelegate {
     }
 }*/
 // MARK: - Websocket event delegate
+
 extension StarscreamViewController: WebSocketEventDelegate {
     func webSocketDidViabilityChange(isViable: Bool) {
         print("webSocketDidViabilityChange: \(isViable)")
