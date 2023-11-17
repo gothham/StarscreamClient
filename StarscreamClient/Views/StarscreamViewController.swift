@@ -9,17 +9,10 @@
 import UIKit
 import Starscream
 
-/// For sending message to the sever.(Experimental)
-protocol WebSocketConvey {
-    func sendMessage(message: String)
-}
-
 class StarscreamViewController: UIViewController {
     var starscream: WebSocketClient = StarscreamClient()
 
 //    var SR_Socket: SRWebSocket?
-    
-    var wsConveyDelegate: WebSocketConvey?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,6 +33,17 @@ class StarscreamViewController: UIViewController {
     
     @IBAction func reconnectAction(_ sender: Any) {
         starscream.reconnectWebSocketConneciton()
+    }
+    
+    private func sendMessage() {
+        starscream.sendString("Hello") { isSuccess in
+            switch isSuccess {
+            case true:
+                print("Message sent.")
+            case false:
+                print("Message failed to sent.")
+            }
+        }
     }
 }
 

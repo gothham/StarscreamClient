@@ -109,6 +109,18 @@ open class StarscreamClient: WebSocketClient {
             print("Message send to server successfully.")
         }
     }
+    
+    public func sendString(_ string: String, completion: @escaping (Bool) -> Void) {
+        guard self.readyState == .open else {
+            completion(false)
+            return
+        }
+        
+        socket.write(string: string) {
+            completion(true)
+        }
+    }
+    
     // MARK: - Private methods
     
     private func handleError(_ error: Error?) {
@@ -187,15 +199,6 @@ extension StarscreamClient: WebSocketDelegate {
             isConnected = false
             eventDelegate?.webSocketPeerClosed()
             break
-        }
-    }
-}
-// MARK: - WebSocketConvey protocol conformance
-
-extension StarscreamClient: WebSocketConvey {
-    func sendMessage(message: String) {
-        socket.write(string: message) {
-            print("Successfully conveyed to server!")
         }
     }
 }

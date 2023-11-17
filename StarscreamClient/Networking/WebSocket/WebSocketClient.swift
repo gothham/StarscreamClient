@@ -78,4 +78,6 @@ protocol WebSocketClient {
     func closeWebSocketConnection()
     /// Close the existing and reconnect the WebSocket connection.
     func reconnectWebSocketConneciton()
+    /// Sends string value to the server.
+    func sendString(_ string: String, completion: @escaping (Bool) -> Void)
 }
